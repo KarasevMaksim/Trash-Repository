@@ -1,4 +1,4 @@
-from typing import Final, Callable
+from typing import Final, Callable, Type, TypeVar
 
 
 PI: Final[float] = 3.14
@@ -36,3 +36,16 @@ def hint_for_arg_func(
     if mass:
         return mass[::].append(1)
     func(mass)
+    
+
+
+
+class FurFur:
+    pass
+
+T = TypeVar('T') # TypeHint для классов без ограничений
+T = TypeVar('T', bound=FurFur) # TypeHint для одного класс и его наследников
+
+    
+def constract_object(class_obj: Type[T]) -> T:
+    return class_obj()
