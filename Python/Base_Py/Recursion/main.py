@@ -19,8 +19,6 @@
 # Ваша программа должна вывести единственное число: C(n, k).
 
 
-
-
 def c(n, k):
     if n < k:
         return 0
@@ -34,23 +32,49 @@ def c(n, k):
 
 # Обход вложенного массива ====================================================
 
-mass = [1, [2, [3, 4], 5, [6, 7], 8], 9, [10, [11, ['Senko', 'Holo'], 12], 13, [14, 15], 16], 17]
 
-def rec_search1(mass):
+mass = [1, [2, [3, 4], 5, [6, 7], 8], 9, [
+    10, [11, ['Senko', 'Holo'], 12], 13, [14, 15], 16], 17]
+
+
+def rec_search1(mass) -> None:
     for i in mass:
         if not isinstance(i, list):
             print(i)
         else:
             rec_search1(i)
-            
-            
-def rec_search2(mass):
+
+
+def rec_search2(mass) -> None:
     if mass:
         if not isinstance(mass[0], list):
-            print(mass[0]) 
+            print(mass[0])
         else:
             rec_search2(mass[0])
         rec_search2(mass[1:])
 
-# if __name__ == '__main__':
-#     rec_search2(mass)
+
+def rec_search3(mass) -> str:
+    if mass:
+        if isinstance(mass[0], list):
+            return rec_search3(mass[0]) + ', ' + rec_search3(mass[1:])
+        else:
+            return str(mass[0]) + ', ' + rec_search3(mass[1:])
+    else:
+        return ''
+    
+string = 'SenkoSun'
+
+def reverse_name(name: str) -> str:
+    if name:
+        return name[-1] + reverse_name(name[:len(name) -1])
+    return ''
+
+def my_pow(num, n):
+    if not n == 0:
+        return num * my_pow(num, n-1)
+    return 1
+
+
+if __name__ == '__main__':
+    print(my_pow(5, 3))
