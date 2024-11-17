@@ -52,3 +52,24 @@ def create_button(lable):
 #     button2 = create_button('Отмена')
 #     button1()
 #     button2()
+
+# closure as class object =====================================================
+
+def func_as_object(a, b):
+    def add():
+        return a + b
+    def sub():
+        return a - b
+    def mul():
+        return a * b
+    func_as_object.add = add
+    func_as_object.sub = sub
+    func_as_object.mul = mul
+    return func_as_object
+
+if __name__ == '__main__':
+    func = func_as_object(2, 3)
+    print(func.add())
+    print(func.sub())
+    print(func.mul())
+    
