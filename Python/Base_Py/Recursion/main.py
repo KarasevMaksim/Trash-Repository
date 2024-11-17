@@ -20,7 +20,6 @@
 
 
 
-n, k = map(int, input().split())
 
 def c(n, k):
     if n < k:
@@ -29,4 +28,29 @@ def c(n, k):
         return 1
     return c(n-1, k) + c(n-1, k-1)
 
-print(c(n, k))
+# if __name__ == '__main__':
+#     n, k = map(int, input().split())
+#     print(c(n, k))
+
+# Обход вложенного массива ====================================================
+
+mass = [1, [2, [3, 4], 5, [6, 7], 8], 9, [10, [11, ['Senko', 'Holo'], 12], 13, [14, 15], 16], 17]
+
+def rec_search1(mass):
+    for i in mass:
+        if not isinstance(i, list):
+            print(i)
+        else:
+            rec_search1(i)
+            
+            
+def rec_search2(mass):
+    if mass:
+        if not isinstance(mass[0], list):
+            print(mass[0]) 
+        else:
+            rec_search2(mass[0])
+        rec_search2(mass[1:])
+
+# if __name__ == '__main__':
+#     rec_search2(mass)
