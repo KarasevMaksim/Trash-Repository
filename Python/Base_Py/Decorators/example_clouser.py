@@ -67,9 +67,8 @@ def func_as_object(a, b):
     func_as_object.mul = mul
     return func_as_object
 
-if __name__ == '__main__':
-    func = func_as_object(2, 3)
-    print(func.add())
-    print(func.sub())
-    print(func.mul())
-    
+# if __name__ == '__main__':
+#     func = func_as_object(2, 3)
+#     print(func.add())
+#     print(func.sub())
+#     print(func.mul())
