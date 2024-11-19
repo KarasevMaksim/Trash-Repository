@@ -68,3 +68,31 @@ code = '''a = 10
 b = 20 
 print(a + b)''' 
 exec(code) # Напечатет в консоле 30
+
+#==============================================================================
+# Функция dir() позволяет посмотреть весь список встроенных методов в объекте
+x = list()
+print(dir(x)) # [__sizeof__', '__str__', 'append', 'clear' ...]
+
+#==============================================================================
+# Функуия mro() позволяет увидеть как будут искаться методы внутри
+# унаследованных классов
+class A:
+    def method(self):
+        print("Method from A")
+
+class B(A):
+    def method(self):
+        print("Method from B")
+
+class C(A):
+    def method(self):
+        print("Method from C")
+
+class D(B, C):
+    pass
+# Получение порядка разрешения методов
+print(D.mro())
+# [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>,
+# <class '__main__.A'>, <class 'object'>]
+
