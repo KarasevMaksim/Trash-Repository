@@ -1,13 +1,4 @@
 # Функции, порождающие данные (бесконечные итераторы)==========================
-from itertools import dropwhile
-from itertools import islice
-from itertools import pairwise
-from itertools import tee
-from itertools import zip_longest
-from itertools import chain
-from itertools import takewhile
-from itertools import compress
-import operator
 from itertools import count, cycle, repeat, starmap, accumulate
 
 # бесконечный счетчик
@@ -17,7 +8,7 @@ count1 = count()  # args: start, step
 # Посимвольно возвращает итериреумый объект, в конце не бросает исключение,
 # а начинает заново, так как сохраняет в себе копию объекта (расходует память)
 cc = cycle('Holo')
-print(next(cc))  # H
+print(next(cc)) # H
 # -----------------------------------------------------------------------------
 
 # Повторяет переданный обект. Бесконечно или с ограничением
@@ -33,35 +24,38 @@ full_names2 = list(map(lambda name: f'{name[0]} {name[1]}', persons))
 # Фнкция accumulate()
 # Функция работает аналогично функции reduce() за тем исключением, что
 # функция генерирует все промежуточные результаты, а не только конечный.
+import operator
 # по умолчанию operator.add, initial=None: Начальное значение
-data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]
-
-print(list(accumulate(data)))  # [3, 7, 13, 15, 16, 25, 25, 32, 37, 45]
-# [3, 12, 72, 144, 144, 1296, 0, 0, 0, 0]
-print(list(accumulate(data, operator.mul)))
-print(list(accumulate(data, max)))  # [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]
-print(list(accumulate(data, min)))  # [3, 3, 3, 2, 1, 1, 0, 0, 0, 0]
+data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8] 
+ 
+print(list(accumulate(data))) # [3, 7, 13, 15, 16, 25, 25, 32, 37, 45]
+print(list(accumulate(data, operator.mul))) # [3, 12, 72, 144, 144, 1296, 0, 0, 0, 0]
+print(list(accumulate(data, max))) # [3, 4, 6, 6, 6, 9, 9, 9, 9, 9]
+print(list(accumulate(data, min))) # [3, 3, 3, 2, 1, 1, 0, 0, 0, 0]
 # -----------------------------------------------------------------------------
 
 # Фильтрующие функуии =========================================================
 # Функция compress() Сопостовляет итерируемое значение с другим итерируемым
 # значением
-data = 'ABCDEF'
-selectors = [True, False, True, False, True, False]
-result = compress(data, selectors)
-print(list(result))  # ['A', 'C', 'E']
+from itertools import compress
+data = 'ABCDEF' 
+selectors = [True, False, True, False, True, False] 
+result = compress(data, selectors) 
+print(list(result)) #  ['A', 'C', 'E']
 # -----------------------------------------------------------------------------
 
 # Функция islice() позволяет получить срез итерируемого объекта
-
-print(*islice(range(10), None))  # 0 1 2 3 4 5 6 7 8 9
-print(*islice(range(100), 5))   # 0 1 2 3 4
-print(*islice(range(100), 5, 10))  # 5 6 7 8 9
-print(*islice(range(100), 0, 100, 10))  # 0 10 20 30 40 50 60 70 80 90
+from itertools import islice 
+ 
+print(*islice(range(10), None)) # 0 1 2 3 4 5 6 7 8 9
+print(*islice(range(100), 5))   # 0 1 2 3 4 
+print(*islice(range(100), 5, 10)) # 5 6 7 8 9
+print(*islice(range(100), 0, 100, 10)) # 0 10 20 30 40 50 60 70 80 90
 # -----------------------------------------------------------------------------
 
 # Функция dropwhile() начинает возвращать элементы последовательности после
 # того как элемент получит значение False
+from itertools import dropwhile 
 
 numbers = [1, 1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3]
 new_numbers = list(dropwhile(lambda num: num < 5, numbers))
@@ -70,6 +64,7 @@ new_numbers = list(dropwhile(lambda num: num < 5, numbers))
 
 # Функция takewhile() начинает возвращать элементы последовательности до
 # того как будет получено значение False
+from itertools import takewhile
 
 new_numbers = list(takewhile(lambda num: num < 5, numbers))
 # print(new_numbers)  [1, 1, 2, 3, 4, 4]
@@ -78,24 +73,25 @@ new_numbers = list(takewhile(lambda num: num < 5, numbers))
 # Функции объединяющие и раздуляющие данные ==================================
 # Функция chain() объединяет в один итератор, все переданные в нее
 # итерируемые последовательности
+from itertools import chain
 
-gen_chain = chain([1, 2, 3], ['a', 'b', 'c'],
-                  ('Timur', 299, 'Female', 'Dragon Maid'))
+gen_chain = chain([1, 2, 3], ['a', 'b', 'c'], ('Timur', 299, 'Female', 'Dragon Maid'))
 for i in gen_chain:
-    print(i, end=' ')  # 1 2 3 a b c Tohru 299 Female Dragon Maid
-
-chain_iter2 = chain(enumerate('ABC'))
-print(*chain_iter2)  # (0, 'A') (1, 'B') (2, 'C')
+    print(i, end=' ') # 1 2 3 a b c Tohru 299 Female Dragon Maid
+    
+chain_iter2 = chain(enumerate('ABC')) 
+print(*chain_iter2) # (0, 'A') (1, 'B') (2, 'C')
 
 # chain.from_iterable Распаковывает вложенные итерируемые объекты
-chain_iter3 = chain.from_iterable(enumerate('ABC'))
-print(*chain_iter3)  # 0 A 1 B 2 C
+chain_iter3 = chain.from_iterable(enumerate('ABC')) 
+print(*chain_iter3) # 0 A 1 B 2 C
 # -----------------------------------------------------------------------------
 
 # Функция zip_longest() Объединяет элементы в кортежи по самому длинному
 # элементу, к коротким элементам добавляется значение из аргумента
+from itertools import zip_longest
 
-print(*zip([1, 2, 3], ['a', 'b', 'c', 'd', 'e']))
+print(*zip([1, 2, 3], ['a', 'b', 'c', 'd', 'e'])) 
 print(*zip_longest([1, 2, 3], ['a', 'b', 'c', 'd', 'e'], fillvalue=None))
 # (1, 'a') (2, 'b') (3, 'c')
 # (1, 'a') (2, 'b') (3, 'c') (None, 'd') (None, 'e')
@@ -104,14 +100,16 @@ print(*zip_longest([1, 2, 3], ['a', 'b', 'c', 'd', 'e'], fillvalue=None))
 # Функция tee() позволяте создать несколько итераторов на основе одной
 # последовательности
 # Функция tee() возвращает кортеж с итераторами
+from itertools import tee
 
-iter1, iter2 = tee(['Senko', 'Holo', 'Vanilla'], 2)  # default arg == 2
-print(*iter1, end=' ')  # Senko Holo Vanilla
-print(*iter2, end=' ')  # Senko Holo Vanilla
+iter1, iter2 = tee(['Senko', 'Holo', 'Vanilla'], 2) # default arg == 2
+print(*iter1, end=' ') # Senko Holo Vanilla
+print(*iter2, end=' ') # Senko Holo Vanilla
 # -----------------------------------------------------------------------------
 
 # Функция pairwise() создает последовательные прекрывающиеся пары в виде
 # кортежей взятые из итерируемого объекта
+from itertools import pairwise
 
 print(*pairwise('ABCDEFG'))
 print(*pairwise([1, 2, 3, 4, 5]))
