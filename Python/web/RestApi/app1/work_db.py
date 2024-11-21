@@ -1,5 +1,6 @@
 import sqlite3
 
+
 base_data = {
     'anime_title1': {
         'name': 'Konosuba',
@@ -7,14 +8,14 @@ base_data = {
         'raiting': '16+',
         'persons': {
             'person1': {
-            'name': 'Megumin',
-            'special': 'Explousen',
-            'anime_title_id': 1
+                'name': 'Megumin',
+                'special': 'Explousen',
+                'anime_title_id': 1
             },
             'person2': {
-            'name': 'Aqua',
-            'special': 'Wother',
-            'anime_title_id': 1
+                'name': 'Aqua',
+                'special': 'Wother',
+                'anime_title_id': 1
             }
         }
     },
@@ -24,9 +25,9 @@ base_data = {
         'raiting': '12+',
         'persons': {
             'person1': {
-            'name': 'Senko',
-            'special': 'Tail Fluf',
-            'anime_title_id': 2
+                'name': 'Senko',
+                'special': 'Tail Fluf',
+                'anime_title_id': 2
             }
         }
     }
@@ -37,27 +38,27 @@ def init_db():
     conn = sqlite3.connect('example.db')
     # создаем курсор для работы с бд
     cursor = conn.cursor()
-    # Включение внешних ключей для проверко целостности бд
-    cursor.execute('PRAGMA forign_keys = ON;')
+    # Включение внешних ключей для проверки целостности бд
+    cursor.execute('PRAGMA foreign_keys = ON;')
 
     # создаем таблицы в бд
     cursor.execute(
         '''
         CREATE TABLE IF NOT EXISTS anime_titles (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             genre TEXT NOT NULL,
-            raiting INTAGER NOT NULL
+            raiting TEXT NOT NULL
         );
         '''
     )
     cursor.execute(
         '''
         CREATE TABLE IF NOT EXISTS persons (
-            id INTAGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             special TEXT NOT NULL,
-            anime_title_id INTAGER,
+            anime_title_id INTEGER,
             FOREIGN KEY (anime_title_id) REFERENCES anime_titles (id)
         );
         '''
@@ -71,11 +72,12 @@ def init_db():
         genre = anime_title['genre']
         raiting = anime_title['raiting']
         cursor.execute(
-            f'''
-            INSERT INTO anime_titles (name, genre, raiting)
-            VALUES ('{name}', '{genre}', '{raiting}');
             '''
+            INSERT INTO anime_titles (name, genre, raiting)
+            VALUES (?, ?, ?);
+            ''', (name, genre, raiting)
         )
+
     for item in base_data:
         anime_title = base_data[item]  
         anime_person = anime_title['persons']
@@ -85,11 +87,14 @@ def init_db():
             special = person_item['special']
             anime_title_id = person_item['anime_title_id']
             cursor.execute(
-                f'''
-                INSERT INTO persons (name, special, anime_title_id)
-                VALUES ('{name}', '{special}', '{anime_title_id}');
                 '''
+                INSERT INTO persons (name, special, anime_title_id)
+                VALUES (?, ?, ?);
+                ''', (name, special, anime_title_id)
             )
+
+    # Сохраняем изменения
+    conn.commit()
     cursor.close()
     conn.close()
 
