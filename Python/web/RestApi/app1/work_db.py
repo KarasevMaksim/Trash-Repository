@@ -90,6 +90,8 @@ def init_db():
                 VALUES ('{name}', '{special}', '{anime_title_id}');
                 '''
             )
+    cursor.close()
+    conn.close()
 
 if __name__ == '__main__':
     init_db()
