@@ -43,6 +43,14 @@
 -- Получить все данные соответствующие условию --------------------------------
 -- SELECT * FROM anime_titles WHERE id=2;
 
+-- Получить новую колонку с расчетом значения ---------------------------------
+-- SELECT
+--     title,
+--     amount,
+--     amount * 1.65 AS pack
+-- FROM 
+--     book;
+
 -- Запрос с отношением по ключам к нескольким таблицам ------------------------
 -- SELECT
 --     anime_titles.name AS title_name,
@@ -74,6 +82,35 @@
 -- LEFT JOIN persons
 -- ON anime_titles.id = persons.anime_title_id
 -- WHERE persons.name IS NULL;
+
+
+-- ЗАПРОСЫ К БД С СОРТИРОВКОЙ =================================================
+-- Сортировка по колонке в порядке возрастания ASC и убывания DESC ------------
+-- SELECT * FROM anime_titles ORDER BY id ASC;
+-- SELECT * FROM anime_titles ORDER BY id DESC;
+-- Сортировка по нескольким колонкам ------------------------------------------
+-- SELECT * FROM anime_titles ORDER BY id DESC, name ASC;
+-- Сортировка с Лимитом по записям --------------------------------------------
+-- SELECT * FROM anime_titles ORDER BY id DESC LIMIT 2;
+-- SELECT * FROM anime_titles ORDER BY id DESC LIMIT 2 OFFSET 1;
+-- Сортировка и вычисляемым значением -----------------------------------------
+-- SELECT id * 2 AS double_id, name FROM anime_titles ORDER BY double_id DESC;
+
+
+-- ЗАПРОСЫ К БД С ГРУППИРОВКОЙ ================================================
+-- Вывести количество тайтлов с группированных по рейтингу и если этих тайтлов
+-- больше одного --------------------------------------------------------------
+-- SELECT
+--     raiting, COUNT(name) as cnt_title
+-- FROM
+--     anime_titles
+-- GROUP BY
+--     raiting
+-- HAVING
+--     COUNT(name) > 1
+-- ORDER BY
+--     cnt_title DESC;
+
 
 
 -- ДОБОВЛЕНИЕ ЗАПИСЕЙ В БД ====================================================
@@ -132,3 +169,65 @@
 -- Разные агрегирующие функции ================================================
 -- AVG (column) возвращает среднее значение по столбцу column
 -- SUM(column) возвращает сумму по столбцу column
+-- CAST(column AS INTEGER) преобразует колонку к новому типу данных в запросе
+
+
+-- Функции для работы с ДАТАМИ ================================================
+-- Функция EXTRACT извлекает из даты нужную ее часть --------------------------
+-- century — век;
+-- day — день;
+-- doy (от англ. day of the year) — день года: от 1 до 365/366;
+-- isodow (от англ. day of the week и ISO 8601, международного стандарта даты
+-- и времени) — день недели: понедельник — 1, воскресенье — 7.
+-- hour — час;
+-- milliseconds — миллисекунда;
+-- minute — минута;
+-- second — секунда;
+-- month — месяц;
+-- quarter — квартал;
+-- week — неделя в году;
+-- year — год.
+
+-- Шаблон
+-- SELECT 
+--     id_user,
+--     EXTRACT(MONTH FROM log_on) AS month_activity,
+--     EXTRACT(DAY FROM log_on) AS day_activity
+-- FROM 
+--     user_activity;
+
+-- Функция DATE_TRUNC усекает дату до часа, дня или месяца --------------------
+-- 'microseconds' — микросекунды;
+-- 'milliseconds' — миллисекунды;
+-- 'second' — секунда;
+-- 'minute' — минута;
+-- 'hour' — час;
+-- 'day' — день;
+-- 'week' — неделя;
+-- 'month' — месяц;
+-- 'quarter' — квартал;
+-- 'year' — год;
+-- 'decade' — декада года;
+-- 'century' — век.
+
+-- Шаблон из 2019-03-01 23:34:55 получаем 2019-03-01 23:00:00
+-- SELECT 
+--     DATE_TRUNC('hour', log_on) as date_log_on
+-- FROM 
+--    user_activity;
+
+
+-- ПОДЗАПРОСЫ =================================================================
+-- В SQL нельзя использовать вложенные агригирующие функции
+-- SELECT AVG(COUNT(raiting)) для этого нужно использовать подзапросы
+-- Шаблон
+-- SELECT 
+--     AVG(Sub.count_rating) AS avg_count_rating
+-- FROM
+--     (SELECT 
+--        COUNT(rating) AS count_rating
+--     FROM 
+--         books
+--     GROUP BY genre) AS Sub;
+
+
