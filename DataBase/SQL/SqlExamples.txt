@@ -7,41 +7,6 @@
 6.ORDER BY сортируется результатирующая выборка
 
 
-Типы данных в Sqlite ==========================================================
-INTEGER
-Хранит целые числа от -2^63 до 2^63-1.
-SQLite автоматически выбирает размер, необходимый для хранения значения.
-REAL
-Числовой тип с плавающей запятой. Это обычно 8-байтовое значение,
-соответствующее стандарту IEEE 754.
-TEXT
-Строковый тип данных. Текст может быть представлен в кодировке
-UTF-8, UTF-16BE или UTF-16LE.
-BLOB
-Тип данных для хранения бинарных данных.
-BLOB может хранить данные любого размера.
-NULL
-Специальный тип данных, представляющий отсутствие значения.
-BOOLEAN
-Для хранения логических значений используются целые числа 0-1
-
-
-Cоздание таблиц со связью один ко многим ======================================
-CREATE TABLE IF NOT EXISTS anime_titles (
-   id INTEGER PRIMARY KEY AUTOINCREMENT,
-   name TEXT NOT NULL,
-   genre TEXT NOT NULL,
-   raiting TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS persons (
-   id INTEGER PRIMARY KEY AUTOINCREMENT,
-   name TEXT NOT NULL,
-   special TEXT NOT NULL,
-   anime_title_id INTEGER,
-   FOREIGN KEY (anime_title_id) REFERENCES anime_titles(id)
-);
-
-
 ЗАПРОСЫ К БД ==================================================================
 Получить все данные из таблицы ------------------------------------------------
 SELECT * FROM anime_titles;
