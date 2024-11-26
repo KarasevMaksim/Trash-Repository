@@ -67,6 +67,22 @@ CREATE TABLE IF NOT EXISTS publisher (
 	CONSTRAINT pk_publisher PRIMARY KEY (publisher_id)
 );
 
+Создание связи один к одному --------------------------------------------------
+CREATE TABLE IF NOT EXISTS persons (
+    person_id SERIAL,
+    first_name VARCHAR(64),
+    last_name VARCHAR(64),
+    CONSTRAINT pk_person PRIMARY KEY (person_id)
+);
+CREATE TABLE IF NOT EXISTS passport (
+    passport_id SERIAL,
+    serial_number INTEGER NOT NULL UNIQUE,
+    person_id INTAGER NOT NULL,
+    CONSTRAINT pk_passport PRIMARY KEY (passport_id),
+    CONSTRAINT fk_person FOREIGN KEY (person_id) REFERENCES persons(person_id)
+    ON DELETE CASCADE UNIQUE
+);
+
 Создание связи один ко многим -------------------------------------------------
 CREATE TABLE IF NOT EXISTS publisher (
     publisher_id SERIAL,
