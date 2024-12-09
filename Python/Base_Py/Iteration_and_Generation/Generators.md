@@ -1,4 +1,6 @@
-# Генератор простых чисел =====================================================
+# Примеры создания и использования генераторов
+# Генератор простых чисел
+```python
 def primes():
     count = 2
     while True:
@@ -7,31 +9,33 @@ def primes():
             yield count
         count += 1
 
-# if __name__ == '__main__':
-#     x = primes()        
-#     for _ in range(31):
-#         print(next(x), end=' ')
+if __name__ == '__main__':
+    x = primes()        
+    for _ in range(31):
+        print(next(x), end=' ')
+```
         
-# reverse generator ===========================================================
+# reverse generator
+```python
 def reverse_generator(iter_obj):
     index = len(iter_obj) - 1
     while index >= 0:
         yield iter_obj[index]
         index -= 1
         
-# if __name__ == '__main__':
-#     gen = reverse_generator([1, 2, 3])
-#     print(next(gen))
-#     print(next(gen))
-#     print(next(gen))
-
-# Синтаксическая констркция yield from ========================================
+if __name__ == '__main__':
+    gen = reverse_generator([1, 2, 3])
+    print(next(gen))
+    print(next(gen))
+    print(next(gen))
+```
+# Синтаксическая констркция yield from
+```python
 def get_data():
     for num in range(5):
         yield num
     for char in 'ABC':
         yield char
-        
 # можно заменить на yield from <iterable>:
 def get_data():
     yield from range(5)
@@ -47,11 +51,13 @@ def gen1():
     yield from gen2()
     yield 'Kawai!'
 
-# if __name__ == '__main__':
-#     for i in gen1():
-#         print(i, end=' ') # Good girl This Senko Holo Kawai!
+if __name__ == '__main__':
+    for i in gen1():
+        print(i, end=' ') # Good girl This Senko Holo Kawai!
+```
 
-# Рекурсивные генератонры =====================================================
+# Рекурсивные генератонры
+```python
 def numbers(start):
     yield start
     yield from numbers(start + 1) # бесконечный рекурсивный генератор
@@ -71,12 +77,13 @@ def get_item_from_list_gen(mass):
         # Рекурсивно продолжаем обход оставшихся элементов
         yield from get_item_from_list_gen(mass[1:])
 
-# if __name__ == '__main__':
-#     gen = get_item_from_list_gen(mass)
-#     print(next(gen))
-#     print(next(gen))
-
-# Generators for read file ====================================================
+if __name__ == '__main__':
+    gen = get_item_from_list_gen(mass)
+    print(next(gen))
+    print(next(gen))
+```
+# Generators for read file
+```python
 import os
 
 def update_gen() -> str:
@@ -88,12 +95,12 @@ with open('file.txt', encoding='utf-8') as file:
     file_lines = (line.strip() for line in file)
     gen = update_gen()
     
-    # print(next(gen))
-    # print(next(gen))
+    print(next(gen))
+    print(next(gen))
+```
     
-    
-# Прочие примеры ==============================================================
-
+# Прочие примеры
+```python
 from typing import NamedTuple, TypeVar, Iterator
 
 
@@ -129,9 +136,10 @@ def filter_youngest(person: Iterator[T]) -> str:
     result = max(person, key=lambda x: x.Rodilsy)
     return result.Name
         
-# if __name__ == '__main__':
-#     print(filter_youngest(filter_gen_country(persons)))
-
+if __name__ == '__main__':
+    print(filter_youngest(filter_gen_country(persons)))
+```
+```python
 def unique(iterable):
     '''Выдает уникальные значения из итерируемой последовательности'''
     dublikate = set()
@@ -140,13 +148,14 @@ def unique(iterable):
             dublikate.add(i)
             yield i
             
-# if __name__ == '__main__':
-#     iterator = iter('111222333') 
-#     uniques = unique(iterator) 
-#     print(next(uniques)) 
-#     print(next(uniques)) 
-#     print(next(uniques))
-
+if __name__ == '__main__':
+    iterator = iter('111222333') 
+    uniques = unique(iterator) 
+    print(next(uniques)) 
+    print(next(uniques)) 
+    print(next(uniques))
+```
+```python
 numbers = [1,2,3,4,5]
 
 def around(iterable):
@@ -170,7 +179,7 @@ def around(iterable):
         z = None
         yield (x, y, z)
 
-# if __name__ == '__main__':
-#     print(*around(numbers)) 
-#     print(*around('hey'))
-            
+if __name__ == '__main__':
+    print(*around(numbers)) 
+    print(*around('hey'))
+```            
