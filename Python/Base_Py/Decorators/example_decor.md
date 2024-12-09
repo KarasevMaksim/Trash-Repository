@@ -1,24 +1,12 @@
-import functools
+# Примеры создания и работы с декораторами
+## Возможные применение декораторов:
+- Кеширование
+- Логирование
+- Проверки доступа
+- Проверка типов
 
-'''
-Возможные применение декораторов:
-Кеширование, Логирование, Проверки доступа, Проверка типов,
-'''
-
-# example 1 simple_decorator ==================================================
-def simple_decorator(func):
-    print('im cat! =^^=')
-    return func
-
-def meow():
-    print('Meow :3')
-
-# if __name__ == '__main__':
-#     meow = simple_decorator(meow)
-#     meow()
-
-# Шаблон дефолтного декоратора ================================================
-
+# Шаблон стандартного декоратора
+```python
 def decorator(func): 
     @functools.wraps(func) 
     def wrapper(*args, **kwargs): 
@@ -28,10 +16,29 @@ def decorator(func):
         # или что-то выполняется после вызова декорируемой функции 
         return value 
     return wrapper
+```
+
+# example 1 simple_decorator
+```python
+def simple_decorator(func):
+    print('im cat! =^^=')
+    return func
+
+def meow():
+    print('Meow :3')
+
+if __name__ == '__main__':
+    meow = simple_decorator(meow)
+    meow()
+```
 
 
-# example3 new_print ==========================================================
 
+# example2 new_print
+### Описание:
+Изменяет поведение стандартной функции `Print()`. Копирует `имя функции` и ее `doc string`
+без использования библиотеки `functools`.
+```python
 def new_print(func):
     def wrapper(*args, **kwargs):
         args = (i.upper() if isinstance(i, str) else i for i in args)
@@ -43,14 +50,29 @@ def new_print(func):
         wrapper.__doc__ = func.__doc__
     return wrapper
 
-# if __name__ == '__main__':
-#     print = new_print(print)
-#     print(print.__name__)
-#     print(print.__doc__)
-#     print(111, 'qwe', 333, sep='xxx')
+if __name__ == '__main__':
+    print = new_print(print)
+    print(print.__name__)
+    print(print.__doc__)
+    print(111, 'qwe', 333, sep='xxx')
+    # Restlt:
+    # WRAPPER
+    # PRINT(VALUE, ..., SEP=' ', END='\N', FILE=SYS.STDOUT, FLUSH=FALSE)
 
+    # PRINTS THE VALUES TO A STREAM, OR TO SYS.STDOUT BY DEFAULT.
+    # OPTIONAL KEYWORD ARGUMENTS:
+    # FILE:  A FILE-LIKE OBJECT (STREAM); DEFAULTS TO THE CURRENT SYS.STDOUT.
+    # SEP:   STRING INSERTED BETWEEN VALUES, DEFAULT A SPACE.
+    # END:   STRING APPENDED AFTER THE LAST VALUE, DEFAULT A NEWLINE.
+    # FLUSH: WHETHER TO FORCIBLY FLUSH THE STREAM.
+    # 111XXXQWEXXX333
+```
 
-# example 4 Counter call func =================================================
+# example 3 Counter call func
+### Описание:
+Печатет в консоль имя вызываемой функции и сколько раз она вызывалась.
+```python
+import functools
 
 def counter(func):
     count = 0
@@ -65,14 +87,23 @@ def counter(func):
 def add_smile(text):
     return f'{text} :3'
 
-# if __name__ == '__main__':
-#     add_smile = counter(add_smile)
-#     print(add_smile('im a cat!'))
-#     print(add_smile('im a cat!'))
-#     print(add_smile('im a cat!'))
+if __name__ == '__main__':
+    add_smile = counter(add_smile)
+    print(add_smile('im a cat!'))
+    print(add_smile('im a cat!'))
+    print(add_smile('im a cat!'))
+    # Result:
+    # Call add_smile: 1
+    # im a cat! :3
+    # Call add_smile: 2
+    # im a cat! :3
+    # Call add_smile: 3
+    # im a cat! :3
+```
 
-
-# example 5 Decorator with parametrs ==========================================
+# example 4 Decorator with parametrs
+```python
+import functools
 
 def add_two_smile(smile1='=^^=', smile2=':3'):
     def decorator(func):
@@ -86,20 +117,26 @@ def add_two_smile(smile1='=^^=', smile2=':3'):
 def get_text(text):
     return text
 
-# if __name__ == '__main__':
-    # wrapper = add_two_smile(smile2='OwO')
-    # get_text = wrapper(get_text)
-    # print(get_text('Im a Neco!'))
+ if __name__ == '__main__':
+    wrapper = add_two_smile(smile2='OwO')
+    get_text = wrapper(get_text)
+    print(get_text('Im a Neco!'))
     # or
-    # get_text = add_two_smile(
-    #     smile1='OwO',
-    #     smile2='UwU'
-    # )(get_text)
-    # print(get_text('Im a Neco!'))
+    get_text = add_two_smile(
+        smile1='OwO',
+        smile2='UwU'
+    )(get_text)
+    print(get_text('Im a Neco!'))
+    # Result:
+    # =^^= Im a Neco! OwO
+```
     
-# example 6 Repit Func ========================================================
-
+# example 5 Repit Func
+### Описание:
+Повторяе вызов декорируемой функции n-раз.
+```python
 import time
+import functools
 import requests
 
 def repit_requests(iteration, time_wait=1):
@@ -122,12 +159,13 @@ def test_request(url):
     response = requests.get(url)
     return response.status_code, response.text
 
-# if __name__ == '__main__':
-#     answer = test_request('https://habr.com/ru/news/750366682/')
-#     print(answer)
+if __name__ == '__main__':
+    answer = test_request('https://habr.com/ru/news/750366682/')
+    print(answer)
+```
 
-# Decorator with params and not params ========================================
-
+# Decorator with params and not params
+```python
 def decorator_params(arg1, arg2):
     def real_decorator(func):
         @functools.wraps(func)
@@ -154,30 +192,33 @@ def func_example():
 def fucn_example2():
     print(555)
 
-# if __name__ == '__main__':
-#     func_example()
-#     func_example2()
+if __name__ == '__main__':
+    func_example()
+    func_example2()
+```
 
-# Type Hint ===================================================================
+# Type Hint for decorators
+from `typing` import `Callable`, `TypeVar`, `ParamSpec`
 
+- любые входящие аргументы, любой результат
+`Callable[..., Any]`
+
+- функция вида `func(a: int, b: float)`
+`Callable[[int, float], Any]`
+
+- функция вида `func(a: int, b: float) -> int`
+`Callable[[int, float], int]`
+----------------------------------------------
+```python
+import functools
 from typing import Callable, TypeVar, ParamSpec
 
-'''
-# любые входящие аргументы, любой результат
-Callable[..., Any]
 
-# функция вида `func(a: int, b: float)`
-Callable[[int, float], Any]
-
-# функция вида `func(a: int, b: float) -> int`
-Callable[[int, float], int]
-----------------------------------------------
 T = TypeVar("T")
 
 def func(a: T) -> T:
-    ...
-int -> int, str -> str, float -> float
-'''
+    pass
+# int -> int, str -> str, float -> float
 
 F_Spec = ParamSpec("F_Spec")
 F_Return = TypeVar("F_Return")
@@ -198,3 +239,4 @@ def decorator(
     ) -> F_Return:
         return func(*args, **kwargs)
     return wrapper
+```
