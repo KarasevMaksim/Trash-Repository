@@ -19,10 +19,11 @@ ON TableA.costume = TableB.costume;
 Запрос возвращает записи, в которых для значения TableA.costume найдено такое же в TableB.costume.
 
 `Ответ`
-|id |costume|id |costume|
-|:-:|:-----:|:-:|:-----:|
-|1	|Пират	|2  |Пират  |
-|3	|Котик	|4  |Котик  |
+
+| id  | costume | id  | costume |
+|:---:|:-------:|:---:|:-------:|
+|  1  |  Пират  |  2  |  Пират  |
+|  3  |  Котик  |  4  |  Котик  |
 
 
 ## FULL OUTER JOIN
@@ -37,6 +38,7 @@ ON TableA.costume = TableB.costume;
 ```
 
 `Ответ`
+
 | id    | costume    | id    | costume    |
 |:-----:|:----------:|:-----:|:----------:|
 |  1    |   Пират   |  2    |   Пират   |
@@ -60,6 +62,7 @@ ON TableA.costume = TableB.costume;
 ```
 
 `Ответ`
+
 | id    | costume    | id    | costume    |
 |:-----:|:----------:|:-----:|:----------:|
 |  1    |   Пират   |  2    |   Пират   |
@@ -82,6 +85,7 @@ ON TableA.costume = TableB.costume;
 ```
 
 `Ответ`
+
 | id    | costume    | id    | costume    |
 |:-----:|:----------:|:-----:|:----------:|
 | null  |   null     |  1    |   Жучка    |

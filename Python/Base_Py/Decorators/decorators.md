@@ -1,10 +1,13 @@
+#decorator #python #декоратор
 # Примеры создания и работы с декораторами
 ## Возможные применение декораторов:
 - Кеширование
 - Логирование
 - Проверки доступа
 - Проверка типов
-
+### Описание:
+Декораторы используются для изменения поведения, модификации функции, без непосредственного ее изменения. Функция обертывается декоратором, тем самым расширяется ее функционал.
+***
 # Шаблон стандартного декоратора
 ```python
 def decorator(func): 
@@ -17,7 +20,7 @@ def decorator(func):
         return value 
     return wrapper
 ```
-
+***
 # example 1 simple_decorator
 ```python
 def simple_decorator(func):
@@ -31,9 +34,7 @@ if __name__ == '__main__':
     meow = simple_decorator(meow)
     meow()
 ```
-
-
-
+***
 # example2 new_print
 ### Описание:
 Изменяет поведение стандартной функции `Print()`. Копирует `имя функции` и ее `doc string`
@@ -67,10 +68,10 @@ if __name__ == '__main__':
     # FLUSH: WHETHER TO FORCIBLY FLUSH THE STREAM.
     # 111XXXQWEXXX333
 ```
-
+***
 # example 3 Counter call func
 ### Описание:
-Печатет в консоль имя вызываемой функции и сколько раз она вызывалась.
+Печатает в консоль имя вызываемой функции и сколько раз она вызывалась.
 ```python
 import functools
 
@@ -100,7 +101,7 @@ if __name__ == '__main__':
     # Call add_smile: 3
     # im a cat! :3
 ```
-
+***
 # example 4 Decorator with parametrs
 ```python
 import functools
@@ -130,10 +131,10 @@ def get_text(text):
     # Result:
     # =^^= Im a Neco! OwO
 ```
-    
+  ***  
 # example 5 Repit Func
 ### Описание:
-Повторяе вызов декорируемой функции n-раз.
+Повторяет вызов декорируемой функции n-раз.
 ```python
 import time
 import functools
@@ -163,7 +164,7 @@ if __name__ == '__main__':
     answer = test_request('https://habr.com/ru/news/750366682/')
     print(answer)
 ```
-
+***
 # Decorator with params and not params
 ```python
 def decorator_params(arg1, arg2):
@@ -196,7 +197,7 @@ if __name__ == '__main__':
     func_example()
     func_example2()
 ```
-
+***
 # Type Hint for decorators
 from `typing` import `Callable`, `TypeVar`, `ParamSpec`
 
@@ -208,7 +209,6 @@ from `typing` import `Callable`, `TypeVar`, `ParamSpec`
 
 - функция вида `func(a: int, b: float) -> int`
 `Callable[[int, float], int]`
-----------------------------------------------
 ```python
 import functools
 from typing import Callable, TypeVar, ParamSpec
@@ -240,3 +240,4 @@ def decorator(
         return func(*args, **kwargs)
     return wrapper
 ```
+***

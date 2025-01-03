@@ -57,7 +57,7 @@
 10. **Пользовательские типы**
 Также можно создавать свои собственные типы данных, используя команду
 `CREATE TYPE`
-
+***
 
 # Создание таблиц в PostgreSql
 ```sql
@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS publisher (
 	CONSTRAINT pk_publisher PRIMARY KEY (publisher_id)
 );
 ```
+***
 # Создание связи один к одному
 ```sql
 CREATE TABLE IF NOT EXISTS persons (
@@ -85,6 +86,7 @@ CREATE TABLE IF NOT EXISTS passport (
     ON DELETE CASCADE UNIQUE
 );
 ```
+***
 # Создание связи один ко многим
 ```sql
 CREATE TABLE IF NOT EXISTS publisher (
@@ -103,6 +105,7 @@ CREATE TABLE IF NOT EXISTS book (
     ON DELETE CASCADE
 );
 ```
+***
 # Создание связи Многие ко многим
 ```sql
 CREATE TABLE IF NOT EXISTS publisher (
@@ -129,3 +132,4 @@ CREATE TABLE IF NOT EXISTS publisher_book (
     CONSTRAINT pk_publisher_book PRIMARY KEY (publisher_id, book_id)
 )
 ```
+***
